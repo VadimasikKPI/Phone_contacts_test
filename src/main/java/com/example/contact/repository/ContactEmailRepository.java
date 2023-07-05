@@ -10,4 +10,6 @@ public interface ContactEmailRepository extends JpaRepository<ContactEmail, Long
     ContactEmail findContactEmailByEmail(String email);
     ContactEmail findContactEmailByEmailAndContact(String email, Contact contact);
     List<ContactEmail> findContactEmailsByContact(Contact contact);
+
+    void deleteAllEmailsByContact(Contact contact);
 }

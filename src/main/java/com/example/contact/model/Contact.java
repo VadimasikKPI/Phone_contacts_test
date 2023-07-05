@@ -19,7 +19,7 @@ public class Contact {
     private Long contactId;
 
 
-    @Column(unique = true)
+
     private String contactName;
 
     @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL)

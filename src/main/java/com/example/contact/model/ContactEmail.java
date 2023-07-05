@@ -16,7 +16,7 @@ public class ContactEmail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long emailId;
 
-    @Column(unique = true)
+
     private String email;
 
     @ManyToOne(fetch = FetchType.LAZY)

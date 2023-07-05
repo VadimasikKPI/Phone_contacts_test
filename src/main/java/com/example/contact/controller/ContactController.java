@@ -1,8 +1,6 @@
 package com.example.contact.controller;
 
 import com.example.contact.dto.ContactDTO;
-import com.example.contact.dto.ContactEmailDTO;
-import com.example.contact.dto.ContactPhoneDTO;
 import com.example.contact.service.ContactService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +26,16 @@ public class ContactController {
     @GetMapping("/contacts")
     public ResponseEntity<?> getAllContacts(@RequestParam String token){
         return ResponseEntity.ok(contactService.getContacts(token));
+    }
+
+    @PutMapping("/contacts")
+    public ResponseEntity<?> updateContact(@RequestParam String token, @RequestBody ContactDTO contactDTO){
+        return ResponseEntity.ok(contactService.updateContact(token, contactDTO));
+    }
+
+    @DeleteMapping("/contacts")
+    public ResponseEntity<?> deleteContact(@RequestParam String token, @RequestBody ContactDTO contactDTO){
+        return ResponseEntity.ok(contactService.deleteContact(token, contactDTO));
     }
 
 }

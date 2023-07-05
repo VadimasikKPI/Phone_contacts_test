@@ -12,4 +12,6 @@ public interface ContactPhoneRepository extends JpaRepository<ContactPhone, Long
     ContactPhone findContactPhoneByPhoneNumberAndContact(String phoneNumber, Contact contact);
 
     List<ContactPhone> findContactPhonesByContact(Contact contact);
+
+    void deleteAllPhonesByContact(Contact contact);
 }

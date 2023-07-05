@@ -16,7 +16,7 @@ public class ContactPhone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long phoneId;
 
-    @Column(unique = true)
+
     private String phoneNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
