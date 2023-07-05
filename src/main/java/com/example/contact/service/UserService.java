@@ -4,6 +4,9 @@ import com.example.contact.dto.UserDTO;
 import com.example.contact.model.User;
 import com.example.contact.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,7 +20,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public String registerUser(UserDTO user){
-        System.out.println(user.getUsername() + " - " + user.getPassword());
         if(userRepository.findUserByUsername(user.getUsername())==null){
             User newUser = new User(user.getUsername(), passwordEncoder.encode(user.getPassword()));
             userRepository.save(newUser);
@@ -41,12 +43,5 @@ public class UserService {
         return user;
     }
 
-    public String loginUser(UserDTO userDTO){
-        User user = userRepository.findUserByUsername(userDTO.getUsername());
 
-        if(user!=null && passwordEncoder.matches(userDTO.getPassword(), user.getPassword())){
-            return "Login success";
-        }
-        else return "Login failed";
-    }
 }

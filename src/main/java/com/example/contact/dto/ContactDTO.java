@@ -18,4 +18,12 @@ public class ContactDTO {
     private List<ContactEmailDTO> emails;
 
     private List<ContactPhoneDTO> phones;
+
+    public List<ContactEmailDTO> getEmails() {
+        return emails;
+    }
+
+    public List<ContactPhoneDTO> getPhones() {
+        return phones;
+    }
 }
