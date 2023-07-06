@@ -1,0 +1,62 @@
+version: '3.9'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgresql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/contact_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: simplepass
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      retries: 10
+
+  postgresql:
+    container_name: postgres_db
+    image: postgres:14.8-alpine3.18
+    environment:
+      POSTGRES_DB: contact_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: simplepass
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ../2. Init Database:/docker-entrypoint-initdb.d
+      - chat-data:/var/lib/postgresql/data
+    ports:
+      - 7000:5432
+
+volumes:
+  chat-data:
+
+
+#version: "3.9"
+#services:
+#  app:
+#    image:
+#  postgres:
+#    container_name: postgres_test_db
+#    image: postgres:14.8-alpine3.18
+#    networks:
+#      - contact-app
+#    environment:
+#      POSTGRES_DB: contact_db
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: simplepass
+#      PGDATA: "/var/lib/postgresql/data/pgdata"
+#    volumes:
+#      - ../2. Init Database:/docker-entrypoint-initdb.d
+#      - chat-data:/var/lib/postgresql/data
+#    ports:
+#      - 7000:5432
+#
+#networks:
+#  contact-app:
+#
+#volumes:
+#  chat-data:
