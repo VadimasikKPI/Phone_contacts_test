@@ -95,11 +95,11 @@ public class ContactService {
         try{
             User user = userRepository.findUserByToken(token);
             if(user==null){
-                throw  new NotFoundException("User not found");
+                throw new NotFoundException("User not found");
             }
             Contact contact = contactRepository.findContactByContactNameAndUser(contactDTO.getContactName(), user);
             if(contact==null){
-                throw  new NotFoundException("Contact not found");
+                throw new NotFoundException("Contact not found");
             }
             List<ContactEmail> emails = contactEmailRepository.findContactEmailsByContact(contact);
             List<ContactPhone> phones = contactPhoneRepository.findContactPhonesByContact(contact);
