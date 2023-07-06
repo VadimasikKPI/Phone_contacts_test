@@ -3,6 +3,7 @@ package com.example.contact.service;
 import com.example.contact.dto.ContactDTO;
 import com.example.contact.dto.ContactEmailDTO;
 import com.example.contact.dto.ContactPhoneDTO;
+import com.example.contact.dto.VariablesDTO;
 import com.example.contact.exception.UniqueException;
 import com.example.contact.exception.NotFoundException;
 import com.example.contact.model.Contact;
@@ -26,10 +27,11 @@ public class ContactService {
     private final ContactEmailRepository contactEmailRepository;
     private final ContactPhoneRepository contactPhoneRepository;
     private final UserRepository userRepository;
+    private final VariablesDTO variablesDTO;
 
-    private final String PHONE_API_KEY = "989e2473d6f0cf6f1a432465db32d815";
+    //private final String PHONE_API_KEY = "989e2473d6f0cf6f1a432465db32d815";
 
-    private final String EMAIL_API_KEY = "6abddb14f73e41b5bd2a5e554f324919";
+    //private final String EMAIL_API_KEY = "6abddb14f73e41b5bd2a5e554f324919";
 
     public String createContact(String token, ContactDTO contactDTO){
         try {
@@ -46,7 +48,7 @@ public class ContactService {
                 contactRepository.save(newContact);
                 for(ContactEmailDTO c: contactDTO.getEmails()){
 
-                    if(contactEmailRepository.findContactEmailByEmailAndContact(c.getEmail(), newContact)==null && EmailAddressValidator.isEmailValid(c.getEmail(), EMAIL_API_KEY)){
+                    if(contactEmailRepository.findContactEmailByEmailAndContact(c.getEmail(), newContact)==null && EmailAddressValidator.isEmailValid(c.getEmail(), variablesDTO.getEmailAPI())){
                         contactEmail.setEmail(c.getEmail());
                         contactEmail.setContact(newContact);
                     }
@@ -58,7 +60,7 @@ public class ContactService {
                 }
 
                 for(ContactPhoneDTO p: contactDTO.getPhones()){
-                    if(contactPhoneRepository.findContactPhoneByPhoneNumberAndContact(p.getPhone(), newContact)==null && PhoneNumberValidator.isPhoneNumberValid(p.getPhone(), PHONE_API_KEY)){
+                    if(contactPhoneRepository.findContactPhoneByPhoneNumberAndContact(p.getPhone(), newContact)==null && PhoneNumberValidator.isPhoneNumberValid(p.getPhone(), variablesDTO.getPhoneAPI())){
                         contactPhone.setPhoneNumber(p.getPhone());
                         contactPhone.setContact(newContact);
                     }
@@ -154,7 +156,7 @@ public class ContactService {
             List<ContactEmail> contactEmails = new ArrayList<>();
             List<ContactPhone> contactPhones = new ArrayList<>();
             for(ContactEmailDTO c: contactDTO.getEmails()){
-                if(EmailAddressValidator.isEmailValid(c.getEmail(), EMAIL_API_KEY)){
+                if(EmailAddressValidator.isEmailValid(c.getEmail(), variablesDTO.getEmailAPI())){
                     contactEmails.add(new ContactEmail(c.getEmail(), oldContact));
                 }
                 else{
@@ -162,7 +164,7 @@ public class ContactService {
                 }
             }
             for(ContactPhoneDTO p: contactDTO.getPhones()){
-                if(PhoneNumberValidator.isPhoneNumberValid(p.getPhone(), PHONE_API_KEY)){
+                if(PhoneNumberValidator.isPhoneNumberValid(p.getPhone(), variablesDTO.getPhoneAPI())){
                     contactPhones.add(new ContactPhone(p.getPhone(), oldContact));
                 }
                 else{
